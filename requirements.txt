@@ -1,0 +1,14 @@
+LUMINAE Software Requirements
+
+Dependencies: 
+xgboost==3.1.2
+lightgbm==4.6.0
+scikit-learn==1.7.2
+pandas==2.3.3
+numpy==2.3.5
+imbalanced-learn==1.7.2
+matplotlib==3.5.0
+seaborn==0.13.2
+shap==0.50.0
+joblib==1.5.2
+
