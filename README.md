@@ -9,6 +9,7 @@ This repository contains the complete codebase for the paper:
 
 > **A cost‑sensitive gradient boosting framework for multi‑label cardiovascular risk prediction using 12‑hour clinical data**  
 > S. Refugio
+> 
 > *BMC Bioinformatics* (under review)
 
 LUMINAE is a three‑module gradient‑boosting framework for cardiovascular risk prediction using the first 12 hours of admission data (the First Measured Physiological Vector, FMPV). It achieves state‑of‑the‑art diagnostic and prognostic accuracy while reducing carbon emissions by 4,000× compared to transformer‑based models.
