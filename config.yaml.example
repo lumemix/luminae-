@@ -1,0 +1,84 @@
+# config.yaml.example – LUMINAE data and output paths (example)
+# Copy this file to config.yaml and replace the placeholder paths with your actual paths.
+
+# Root directories (adjust to your environment)
+mimic_hosp_dir: "/path/to/mimic-iv-3.1/hosp"
+pulse_dir: "/path/to/PULSE-R-MIMIC-IV-3.1"
+progression_analysis_dir: "/path/to/LUMINAE Progression Analysis"
+hematology_analysis_dir: "/path/to/LUMINAE Hematology Analysis"
+risknet_analysis_dir: "/path/to/LUMINAE RiskNet"
+data_pipeline_dir: "/path/to/Data-Phasing"
+
+# Phase I
+phase1_input: "{{pulse_dir}}/temp_merged_6_pharmacy_rx.csv"
+phase1_output: "{{data_pipeline_dir}}/Phase-I/admission_level_core.csv"
+
+# Phase II
+phase2_input: "/path/to/diagnoses_icd.csv.gz"
+phase2_output: "{{data_pipeline_dir}}/Phase-II (Cleaned Diagnostic)/Phase-II (Cleaned Diagnostic).csv"
+
+# Phase III
+phase3_core: "{{data_pipeline_dir}}/Phase-I (Cleaned Demographics)/admission_level_core.csv"
+phase3_diag: "{{data_pipeline_dir}}/Phase-II (Cleaned Diagnostic)/Phase-II (Cleaned Diagnostic).csv"
+phase3_output: "{{data_pipeline_dir}}/Phase-III (Merged Demographics and Diagnostic)/Phase-III (Merged Demographics and Diagnostic).csv"
+
+# Phase IV
+phase4_labitems: "{{mimic_hosp_dir}}/d_labitems.csv/d_labitems.csv"
+phase4_labevents: "{{mimic_hosp_dir}}/labevents.csv/labevents.csv"
+phase4_stage3: "{{phase3_output}}"
+phase4_output: "{{data_pipeline_dir}}/Phase-IV (Merge-I to Laboratory)/Phase-IV (Merge-I to Laboratory).csv"
+phase4_temp: "{{data_pipeline_dir}}/Phase-IV_temp.csv"
+
+# Phase V
+phase5_chartevents: "{{progression_analysis_dir}}/chartevents.csv.gz"
+phase5_d_items: "{{progression_analysis_dir}}/d_items.csv.gz"
+phase5_stage4: "{{phase4_output}}"
+phase5_output: "{{data_pipeline_dir}}/Phase-V (Merge-II to Vitals)/Phase-V (Merge-II to Vitals).csv"
+phase5_temp: "{{data_pipeline_dir}}/Phase-V_temp.csv"
+
+# Phase VI (sharding for RiskNet)
+phase6_input: "{{phase3_output}}"
+phase6_output_dir: "{{risknet_analysis_dir}}"
+
+# Phase VII (sharding for HematologyNet)
+phase7_input: "{{phase5_output}}"
+phase7_output_dir: "{{hematology_analysis_dir}}"
+
+# Phase VIII (sharding for ProgressionNet)
+phase8_input: "{{phase5_output}}"
+phase8_output_dir: "{{progression_analysis_dir}}"
+
+# Phase IX (Temporal Labs)
+phase9_phase_v: "{{phase5_output}}"
+phase9_labitems: "{{mimic_hosp_dir}}/d_labitems.csv/d_labitems.csv"
+phase9_labevents: "{{mimic_hosp_dir}}/labevents.csv/labevents.csv"
+phase9_output_dir: "{{data_pipeline_dir}}/Phase-VI (Temporal Labs)"
+
+# Phase X (Time‑Series)
+phase10_vitals_chunked: "{{data_pipeline_dir}}/Phase-VIII (Temporal Labs + Vitals)/temporal_vitals_chunked.csv"
+phase10_labs_chunked: "{{data_pipeline_dir}}/Phase-VI (Temporal Labs)/temporal_labs_chunked.csv"
+phase10_labitems: "{{mimic_hosp_dir}}/d_labitems.csv/d_labitems.csv"
+phase10_d_items: "{{progression_analysis_dir}}/d_items.csv.gz"
+phase10_output_dir: "{{data_pipeline_dir}}/Phase-IX (Time-Series)"
+
+# Phase XI (Raw Temporal Features)
+phase11_d_items: "{{progression_analysis_dir}}/d_items.csv.gz"
+phase11_chartevents: "{{progression_analysis_dir}}/chartevents.csv.gz"
+phase11_d_labitems: "{{mimic_hosp_dir}}/d_labitems.csv/d_labitems.csv"
+phase11_labevents: "{{mimic_hosp_dir}}/labevents.csv/labevents.csv"
+phase11_output_dir: "{{data_pipeline_dir}}/Phase-XI (Raw Temporal Features)"
+
+# Phase XII (Final Merge)
+phase12_temporal: "{{data_pipeline_dir}}/Phase-XI (Temporal Merge)/temporal_all_features.csv"
+phase12_static: "{{data_pipeline_dir}}/Phase-VIII (Temporal Labs + Vitals)/phase_viii_merged.csv"
+phase12_output_dir: "{{data_pipeline_dir}}/Phase-XII (Final)"
+
+# Training data
+risknet_train_csv: "{{phase3_output}}"
+risknet_models_dir: "{{risknet_analysis_dir}}/RiskNet-NEO models"
+
+progressionnet_train_csv: "{{phase5_output}}"
+progressionnet_models_dir: "{{progression_analysis_dir}}/ProgressionModels"
+
+hematologynet_train_csv: "{{data_pipeline_dir}}/Phase-XII (Final)/phase_xii_master.csv"
+hematologynet_models_dir: "{{hematology_analysis_dir}}/models"
