@@ -2,7 +2,7 @@
 
 **Latent‑Unified Multi‑Domain Integration for Cardio‑Networking Analysis**
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.XXXXXXX.svg)](https://doi.org/10.5281/zenodo.XXXXXXX)
+[![DOI](https://zenodo.org/badge/1183051382.svg)](https://doi.org/10.5281/zenodo.19049448)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 This repository contains the complete codebase for the paper:
